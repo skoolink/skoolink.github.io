@@ -1,0 +1,26 @@
+name: Super Fast JSON Merge and Deploy
+
+on:
+  push:
+    branches: ["main"]
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Merge JSON with jq
+        run: |
+          mkdir -p public
+          jq -s '[.[] | {code: .code, name: .name, domain: .domain}]' schools/*.json > public/schools-gen.json
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: public
+          branch: gh-pages
