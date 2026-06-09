@@ -20,6 +20,7 @@ jobs:
           cp index.html public/
           cp -r schools public/
           jq -s '[.[] | {code: .code, name: .name, domain: .domain}]' schools/*.json > public/schools.json
+          yq eval-all '[. | {code: .code, name: .name, domain: .domain}]' schools/*.yaml > public/schools-yaml.json
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
