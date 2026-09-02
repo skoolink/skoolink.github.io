@@ -3,10 +3,7 @@ name: Super Fast JSON Merge and Deploy
 on:
   push:
     branches: ["main"]
-<<<<<<< HEAD
-=======
   workflow_dispatch:
->>>>>>> origin/main
 
 permissions:
   contents: write
@@ -21,7 +18,9 @@ jobs:
       - name: Merge JSON with jq
         run: |
           mkdir -p public
-          jq -s '[.[] | {code: .code, name: .name, domain: .domain}]' schools/*.json > public/schools-gen.json
+          cp index.html public/
+          cp -r schools public/
+          yq eval -o json schools/*/index.yml | jq -s '[.[] | {code: .code, name: .name, domain: .domain}]' > public/schools.json
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
