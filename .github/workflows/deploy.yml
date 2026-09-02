@@ -3,6 +3,10 @@ name: Super Fast JSON Merge and Deploy
 on:
   push:
     branches: ["main"]
+<<<<<<< HEAD
+=======
+  workflow_dispatch:
+>>>>>>> origin/main
 
 permissions:
   contents: write
