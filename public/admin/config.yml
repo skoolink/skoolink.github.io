@@ -1,0 +1,131 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+logo:
+  src: /images/kucing.jpg
+  show_in_header: true
+
+app_title: Master Data
+x-field:
+  - &field_title
+    label: Title
+    name: title
+    widget: string
+  - &field_subtitle
+    label: Subtitle
+    name: subtitle
+    widget: string
+  - &field_date
+    label: Date
+    name: date
+    widget: datetime
+  - &field_path
+    label: Path
+    name: vcpath
+    widget: string
+  - &field_body
+    label: Body
+    name: body
+    widget: richtext
+  - &field_weight
+    label: Weight
+    name: weight
+    widget: number
+    data_type: int
+    required: false
+  - &field_tags
+    label: Tags
+    name: tags
+    widget: list
+    collapsed: true
+  - &field_categories
+    label: Categories
+    name: categories
+    widget: list
+    collapsed: true
+  - &field_image
+    name: image
+    label: Image
+    widget: image
+  - &field_image_multi
+    name: images
+    label: Image
+    widget: image
+    multiple: true
+  - &field_cover
+    label: Featured Image
+    name: cover
+    widget: object
+    summary: Gambar ini akan muncul di paling atas dan di halaman depan
+    fields:
+      - label: Image
+        name: image
+        widget: image
+        choose_url: false
+      - label: Relative Path
+        name: relative
+        widget: hidden
+        default: true
+      - label: Alt Text
+        name: alt
+        widget: string
+        required: false
+  - &field_menu
+    label: Menu Navigasi
+    name: menu
+    widget: object
+    collapsed: true
+    fields:
+      - label: Main Menu
+        name: main
+        widget: object
+        fields:
+          - label: Nama Menu
+            name: name
+            widget: string
+          - label: Urutan
+            name: weight
+            widget: number
+            default: 20
+
+backend:
+  name: github
+  repo: inalix/sandbox
+  branch: main
+  base_url: https://sve-auth.styawan.workers.dev
+
+media_folder: static/uploads
+public_folder: /media
+
+collections:
+  - name: pages
+    label: Pages
+    label_singular: Page
+    folder: /wilayah
+    identifier_field: title
+    format: json
+    reorder:
+      key: weight
+    fields:
+      - label: Meta
+        name: meta
+        widget: object
+        fields:
+          - label: Level
+            name: administrative_area_level
+            widget: string
+          - label: Urutan
+            name: updated_at
+            widget: string
+      - label: Title
+        name: title
+        widget: string
+        multiple: true
+      - label: Data
+        name: data
+        widget: list
+        fields:
+          - label: Code
+            name: code
+            widget: string
+          - label: Name
+            name: name
+            widget: string
